@@ -98,7 +98,7 @@
        <li><a href=""><i class="fa fa-user-o"></i> <span>Profile</span></a></li>
          <li><a href=""><i class="fa fa-wrench"></i> <span>Setting</span></a></li>
         <!-- user permission info -->
-        <li><a href=""><i class="glyphicon glyphicon-log-out"></i> <span>Logout</span></a></li>
+        <li><a href="{{ route('admin.logout') }}"><i class="glyphicon glyphicon-log-out"></i> <span>Logout</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
