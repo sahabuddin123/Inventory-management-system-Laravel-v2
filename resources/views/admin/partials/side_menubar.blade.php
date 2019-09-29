@@ -20,10 +20,10 @@
             </a>
             <ul class="treeview-menu">
               
-              <li id="createUserNav"><a href=""><i class="fa fa-circle-o"></i> Add User</a></li>
+              <li id="createUserNav"><a href=""><i class="fa fa-circle-o"></i> Add Admin</a></li>
              
 
-             <li id="manageUserNav"><a href=""><i class="fa fa-circle-o"></i> Manage Users</a></li>
+             <li id="manageUserNav"><a href=""><i class="fa fa-circle-o"></i> Manage Admin</a></li>
            
             </ul>
           </li>
