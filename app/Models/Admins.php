@@ -16,7 +16,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password'
+        'username', 'email', 'password', 'firstname', 'lastname', 'gender',
     ];
  
     /**
@@ -36,4 +36,25 @@ class Admin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    public function groups()
+    {
+        return $this->belongsToMany(App\Models\Groups::class, 'group_admins');
+    }
+
+
+    public function hasAccess(array $permissions)
+    {
+       foreach($this->groups as $group){
+            if($group->hasAccess($permissions)){
+                return true;
+            }
+       }
+       return false;
+    }
+
+    public function inGroup($groupeSlug)
+    {
+        return $this->groups()->where('slug',$groupSlug)->count()==1;
+    }
 }

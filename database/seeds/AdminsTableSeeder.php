@@ -19,6 +19,10 @@ class AdminsTableSeeder extends Seeder
             'username'      =>  $faker->name,
             'password'  =>  bcrypt('1032000'),
             'email'     =>  'sahabuddinriyaj984@gmail.com',
+            'firstname' => 'Sahab',
+            'lastname'  => 'Uddin',
+            'gender'    =>  1,
+            'picture'   => "no_picture.png"
         ]);
     }
 }

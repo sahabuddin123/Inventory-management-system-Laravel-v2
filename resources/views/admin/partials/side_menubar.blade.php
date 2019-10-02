@@ -39,7 +39,7 @@
               <ul class="treeview-menu">
                <li id="addGroupNav"><a href=""><i class="fa fa-circle-o"></i> Add Group</a></li>
         
-              <li id="manageGroupNav"><a href=""><i class="fa fa-circle-o"></i> Manage Groups</a></li>
+              <li id="manageGroupNav"><a href="{{route('admin.groups.index')}}"><i class="fa fa-circle-o"></i> Manage Groups</a></li>
               </ul>
             </li>
           <li id="brandNav">

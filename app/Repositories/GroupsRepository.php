@@ -56,10 +56,10 @@ class GroupsRepository extends BaseRepository implements GroupsContract
         try {
             $collection = collect($params);
  
-            // $is_filterable = $collection->has('is_filterable') ? 1 : 0;
-            // $is_required = $collection->has('is_required') ? 1 : 0;
- 
-            $merge = $collection->merge(compact('', ''));
+            $name = $params['name'];
+            $slug = $params['slug'];
+            $permissions = serialize($params['permissions']);
+            $merge = $collection->merge(compact('name','slug', 'permissions'));
  
             $groups = new Groups($merge->all());
  
@@ -82,10 +82,10 @@ class GroupsRepository extends BaseRepository implements GroupsContract
  
         $collection = collect($params)->except('_token');
  
-        //$is_filterable = $collection->has('is_filterable') ? 1 : 0;
-        //$is_required = $collection->has('is_required') ? 1 : 0;
- 
-        $merge = $collection->merge(compact('', ''));
+        $name = $params['name'];
+        $slug = $params['slug'];
+        $permissions = serialize($params['permissions']);
+        $merge = $collection->merge(compact('name','slug', 'permissions'));
  
         $groups->update($merge->all());
  
