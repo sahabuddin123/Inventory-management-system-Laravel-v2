@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Contracts\GroupsContract;
 use App\Repositories\GroupsRepository;
+use App\Contracts\AdminsContract;
+use App\Repositories\AdminsRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -11,6 +13,7 @@ class RepositoryServiceProvider extends ServiceProvider
 
     protected $repositories = [
         GroupsContract::class         =>          GroupsRepository::class,
+        AdminsContract::class         =>          AdminsRepository::class,
     ];
     /**
      * Register services.

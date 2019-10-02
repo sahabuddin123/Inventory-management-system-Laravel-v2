@@ -12,7 +12,17 @@ Route::group(['prefix'  =>  'admin'], function () {
         Route::get('/', function () {
             return view('admin.dashboard.index');
         })->name('admin.dashboard');
-        
+
+        Route::group(['prefix'  =>   'admins'], function() {
+ 
+            Route::get('/', 'Admin\AdminsController@index')->name('admin.admins.index');
+            Route::get('/create', 'Admin\AdminsController@create')->name('admin.admins.create');
+            Route::post('/store', 'Admin\AdminsController@store')->name('admin.admins.store');
+            Route::get('/{id}/edit', 'Admin\AdminsController@edit')->name('admin.admins.edit');
+            Route::post('/update', 'Admin\AdminsController@update')->name('admin.admins.update');
+            Route::get('/{id}/delete', 'Admin\AdminsController@delete')->name('admin.admins.delete');
+         
+        });
         Route::group(['prefix'  =>   'groups'], function() {
  
             Route::get('/', 'Admin\GroupsController@index')->name('admin.groups.index');

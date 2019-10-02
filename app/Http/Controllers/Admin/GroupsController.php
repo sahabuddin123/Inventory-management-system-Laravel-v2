@@ -62,6 +62,7 @@ class GroupsController extends BaseController
     public function edit($id)
     {
         $targetgroup = $this->groupsRepository->findGroupsById($id);
+        //$permissions = unserialize($this->targetgroup['permissions']);
         $groups = $this->groupsRepository->listGroups();
     
         $this->setPageTitle('Groups', 'Edit Groups : '.$targetgroup->name);
@@ -80,7 +81,7 @@ class GroupsController extends BaseController
     
         $params = $request->except('_token');
     
-        $groups = $this->groupsRepository->createGroups($params);
+        $groups = $this->groupsRepository->updateGroups($params);
     
         if (!$groups) {
             return $this->responseRedirectBack('Error occurred while updating groups.', 'error', true, true);
