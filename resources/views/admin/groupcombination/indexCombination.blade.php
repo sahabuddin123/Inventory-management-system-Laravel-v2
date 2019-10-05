@@ -21,7 +21,7 @@
       <div class="col-md-12 col-xs-12">
         @include('admin.partials.flash')
         
-        <a href="{{ route('admin.admins.create') }}" class="btn btn-primary">Add Admin</a>
+        <a href="{{ route('admin.combination.combination') }}" class="btn btn-primary">Add Admin</a>
         <br /> <br />
         
         <div class="box">
@@ -34,35 +34,21 @@
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Image</th>
+                  <th>Group Name</th>
                   <th>User Name</th>
-                  <th>Email</th>
-                  <th>Name</th>
-                  <th>Gender</th>
                   <th>Action</th>
-      
                 </tr>
               </thead>
               <tbody>
               @foreach($admin as $admins)
                 <tr>
-                <td>{{$admins->id}}</td>
-                <td><img class="card-img-top" src="{{ asset('storage/'.$admins->image) }}"  alt="Card image cap" style="height:50px;width:50px;"></td>
-                <td>{{$admins->username}}</td>
-                <td>{{$admins->email}}</td>
-                <td>{{$admins->firstname}} {{$admins->lastname}}</td>
-                
-                <td>@if ($admins->gender == 1)
-                    <span class="badge badge-success">Male</span>
-                    @else
-                    <span class="badge badge-success">Female</span>
-                    @endif
-                </td>
+                <td>{{ $admins->id}}</td>
+                <td>{{ $admins->listGroups->name }}</td>
+                <td>{{ $admins->listUser->username }}</td>
                
-
-                <td>
-                    <a href="{{ route('admin.admins.edit', $admins->id) }}" class="btn btn-default"><i class="fa fa-edit"></i></a>
-                    <a href="{{ route('admin.admins.delete', $admins->id) }}" class="btn btn-default"><i class="fa fa-trash"></i></a>
+               <td>
+                    <a href="{{ route('admin.combination.editCombination', $admins->id) }}" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                    <a href="{{ route('admin.combination.deleteCombination', $admins->id) }}" class="btn btn-default"><i class="fa fa-trash"></i></a>
                   </td>
 
                 </tr>

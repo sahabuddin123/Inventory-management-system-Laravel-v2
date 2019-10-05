@@ -1,11 +1,7 @@
 <?php
 namespace App\Contracts;
  
-/**
- * Interface AdminsContract
- * @package App\Contracts
- */
-interface AdminsContract
+interface UserGroupContract
 {
     /**
      * @param string $order
@@ -13,29 +9,29 @@ interface AdminsContract
      * @param array $columns
      * @return mixed
      */
-    public function listAdmins(string $order = 'id', string $sort = 'desc', array $columns = ['*']);
+    public function listUGroups(string $order = 'id', string $sort = 'desc', array $columns = ['*']);
  
     /**
      * @param int $id
      * @return mixed
      */
-    public function findAdminsById(int $id);
+    public function findUGroupsById(int $id);
  
     /**
      * @param array $params
      * @return mixed
      */
-    public function createAdmins(array $params);
+    public function createUGroups(array $params);
  
     /**
      * @param array $params
      * @return mixed
      */
-    public function updateAdmins(array $params);
+    public function updateUGroups(array $params);
  
     /**
      * @param $id
      * @return bool
      */
-    public function deleteAdmins($id);
+    public function deleteUGroups($id);
 }

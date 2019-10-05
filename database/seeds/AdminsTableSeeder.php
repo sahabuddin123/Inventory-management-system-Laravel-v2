@@ -1,7 +1,6 @@
 <?php
 
-use App\Models\Admin;
-use Faker\Factory as Faker;
+use App\Models\Admins;
 use Illuminate\Database\Seeder;
  
 class AdminsTableSeeder extends Seeder
@@ -13,16 +12,14 @@ class AdminsTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create();
- 
-        Admin::create([
-            'username'      =>  $faker->name,
-            'password'  =>  bcrypt('1032000'),
+        Admins::create([
+            'username'   => 'sahabuddin123',
             'email'     =>  'sahabuddinriyaj984@gmail.com',
-            'firstname' => 'Sahab',
-            'lastname'  => 'Uddin',
+            'password'  =>  bcrypt('1032000'),
+            'firstname' =>  'Sahab',
+            'lastname'  =>  'Uddin',
             'gender'    =>  1,
-            'picture'   => "no_picture.png"
+            'image'   => "admin/no_picture.png"
         ]);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-//use App\Models\Admin;
+use App\Models\Admins;
+use App\Models\Groups;
+use App\Models\AdminGroup;
 use Illuminate\Http\Request;
 use App\Contracts\AdminsContract;
 use App\Http\Controllers\BaseController;
@@ -28,6 +30,47 @@ class AdminsController extends BaseController
         return view('admin.admins.index', compact('admin'));
     }
     /**
+     * user
+     * and
+     * groups
+     * combination
+     */
+    public function combination()
+    {
+        
+        $admin = Admins::orderBy('username','asc')->get();
+        $groups = Groups::orderBy('name','asc')->get();
+        $this->setPageTitle('User Group', 'Manage User Group Combination');
+        return view('admin.admins.combination')->with(['admin'  => $admin ,'groups'  => $groups]);
+    }
+    /**
+     * store 
+     * user
+     * group
+     * combination
+     */
+    public function storeCombination(Request $request)
+    {
+        $this->validate($request, [
+            'admin_id'  => 'required',
+            'group_id'  => 'required'
+        ]);
+        $params = $request->except('_token');
+
+            $admin_id = $params['admin_id'];
+            $group_id = $params['group_id'];
+
+            $adminGroup = AdminGroup::create([
+                'admin_id'   => $admin_id,
+                'group_id'   => $group_id,
+            ]);
+
+        if (!$adminGroup) {
+                return $this->responseRedirectBack('Error occurred while creating User Groups.', 'error', true, true);
+            }
+        return $this->responseRedirect('admin.admins.index', 'User Groups added successfully' ,'success',false, false);
+    }
+    /**
      * create
      */
     public function create()
@@ -41,28 +84,49 @@ class AdminsController extends BaseController
     /**
      * store
      */
-    public function store(Request $request)
+     public function store(Request $request)
     {
         $this->validate($request, [
-            'username'              =>  'required|max:191',
-            'password'              =>  'required|min:6',
-            'email'                 =>  'required',
-            'firstname'             =>  'required',
-            'lastname'              =>  'required',
-            'gender'                =>  'required',
-            'image'                 =>  'max:1000'
-            
+            'username'      =>  'required|max:191',
+            'email'         =>  'required|email',
+            'password'      =>  'required|min:6',
+            'firstname'     =>  'required|max:20',
+            'lastname'      =>  'required|max:20',
+            'gender'        =>  'required',
+            'image'         =>  'max:5000'
         ]);
-            
-        $params = $request->except('_token');//;
-    //return view('admin.admins.test', compact('params'));
+    
+        $params = $request->except('_token');
+    
         $admin = $this->adminsRepository->createAdmins($params);
     
         if (!$admin) {
             return $this->responseRedirectBack('Error occurred while creating admin.', 'error', true, true);
         }
-        return $this->responseRedirect('admin.admins.index', 'admin added successfully' ,'success',false, false);
+        return $this->responseRedirect('admin.admins.index', 'Admin added successfully' ,'success',false, false);
     }
+    // public function store(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'username'              =>  'required|max:191',
+    //         'password'              =>  'required|min:6',
+    //         'email'                 =>  'required',
+    //         'firstname'             =>  'required',
+    //         'lastname'              =>  'required',
+    //         'gender'                =>  'required',
+    //         'image'                 =>  'max:1000'
+            
+    //     ]);
+            
+    //     $params = $request->except('_token');//;
+    // //return view('admin.admins.test', compact('params'));
+    //     $admin = $this->adminsRepository->createAdmins($params);
+    
+    //     if (!$admin) {
+    //         return $this->responseRedirectBack('Error occurred while creating admin.', 'error', true, true);
+    //     }
+    //     return $this->responseRedirect('admin.admins.index', 'admin added successfully' ,'success',false, false);
+    // }
     /**
      * edit
      */
@@ -100,12 +164,12 @@ class AdminsController extends BaseController
 
     public function delete($id)
 {
-    $groups = $this->adminsRepository->deleteAdmins($id);
+    $admin = $this->adminsRepository->deleteAdmins($id);
  
-    if (!$groups) {
-        return $this->responseRedirectBack('Error occurred while deleting groups.', 'error', true, true);
+    if (!$admin) {
+        return $this->responseRedirectBack('Error occurred while deleting admin.', 'error', true, true);
     }
-    return $this->responseRedirect('groups deleted successfully' ,'success',false, false);
+    return $this->responseRedirect('admin deleted successfully' ,'success',false, false);
 }
 
 }

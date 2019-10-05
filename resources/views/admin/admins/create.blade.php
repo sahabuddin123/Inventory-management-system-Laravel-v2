@@ -39,6 +39,11 @@
                 </div>
 
                 <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Email" >
+                  @error('email') {{ $message }} @enderror
+                </div>
+                <div class="form-group">
                   <label for="password">Password</label>
                   <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password" >
                   @error('password') {{ $message }} @enderror
@@ -49,11 +54,7 @@
                   <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirm Password" autocomplete="off">
                 </div> -->
 
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Email" >
-                  @error('email') {{ $message }} @enderror
-                </div>
+                
 
                 <div class="form-group">
                   <label for="fname">First name</label>
@@ -81,15 +82,15 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="control-label">Admin Image</label>
-                  <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image"/>
+                    <label class="control-label">Admin Image</label>
+                    <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image"/>
                     @error('image') {{ $message }} @enderror
-                </div>
+              </div>
               </div>
               <!-- /.box-body -->
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <button type="submit" class="btn btn-primary">Save</button>
                 <a href="" class="btn btn-warning">Back</a>
               </div>
             </form>

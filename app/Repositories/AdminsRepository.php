@@ -1,7 +1,7 @@
 <?php
 namespace App\Repositories;
  
-use App\Models\Admin;
+use App\Models\Admins;
 use App\Traits\UploadAble;
 use Illuminate\Http\UploadedFile;
 use App\Contracts\AdminsContract;
@@ -14,9 +14,9 @@ class AdminsRepository extends BaseRepository implements AdminsContract
     use UploadAble;
     /**
      * AdminsRepository constructor.
-     * @param Admin $model
+     * @param Admins $model
      */
-    public function __construct(Admin $model)
+    public function __construct(Admins $model)
     {
         parent::__construct($model);
         $this->model = $model;
@@ -62,10 +62,11 @@ class AdminsRepository extends BaseRepository implements AdminsContract
             $image = null;
      
             if ($collection->has('image') && ($params['image'] instanceof  UploadedFile)) {
-                $image = $this->uploadOne($params['image'], 'admins');
-            }else{
-                $image = "no_image.png";
+                $image = $this->uploadOne($params['image'], 'admin');
             }
+            // else{
+            //     $image = "no_image.png";
+            // }
      
             $username = $params['username'];
             $password = bcrypt($params['password']);
@@ -75,8 +76,8 @@ class AdminsRepository extends BaseRepository implements AdminsContract
             $gender = $collection->has('gender') ? 1 : 0;
 
             
-            $merge = $collection->merge(compact('username','password', 'email', 'firstname', 'lastname','gender','image'));
-            $admin = new Admin($merge->all());
+            $merge = $collection->merge(compact('username','email','password','firstname','lastname','gender','image'));
+            $admin = new Admins($merge->all());
             $admin->save();
  
             return $admin;
@@ -102,7 +103,7 @@ class AdminsRepository extends BaseRepository implements AdminsContract
                 $this->deleteOne($admin->image);
             }
      
-            $image = $this->uploadOne($params['image'], 'admins');
+            $image = $this->uploadOne($params['image'], 'admin');
         }
  
             $username = $params['username'];
@@ -112,7 +113,7 @@ class AdminsRepository extends BaseRepository implements AdminsContract
             $lastname = $params['lastname'];
             $gender = $collection->has('gender') ? 1 : 0;
 
-            $merge = $collection->merge(compact('username','password', 'email', 'firstname', 'lastname','gender','image'));
+            $merge = $collection->merge(compact('username','email','password','firstname','lastname','gender','image'));
  
         $admin->update($merge->all());
  

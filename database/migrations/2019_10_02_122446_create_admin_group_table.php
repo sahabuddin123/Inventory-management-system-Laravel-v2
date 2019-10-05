@@ -15,12 +15,13 @@ class CreateAdminGroupTable extends Migration
     {
         Schema::create('admin_group', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('admin_id');
+            $table->unsignedInteger('admin_id')->unique();
+            $table->foreign('admin_id')->references('id')->on('admins');
             $table->unsignedInteger('group_id');
+            $table->foreign('group_id')->references('id')->on('groups');
             $table->timestamps();
-            $table->unique(['admin_id', 'group_id']);
-            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+            
+            
         });
     }
 

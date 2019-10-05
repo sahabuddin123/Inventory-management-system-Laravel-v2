@@ -33,5 +33,16 @@ Route::group(['prefix'  =>  'admin'], function () {
             Route::get('/{id}/delete', 'Admin\GroupsController@delete')->name('admin.groups.delete');
          
         });
+
+        Route::group(['prefix'  =>   'combination'], function() {
+            /**user groups combination */
+            Route::get('/Createcombination', 'Admin\GroupConbinationController@combination')->name('admin.combination.combination');
+            Route::post('/storeCombination', 'Admin\GroupConbinationController@storeCombination')->name('admin.combination.storeCombination');
+            Route::get('/indexCombination', 'Admin\GroupConbinationController@indexCombination')->name('admin.combination.indexCombination');
+            Route::get('/{id}/edit', 'Admin\GroupConbinationController@edit')->name('admin.combination.editCombination');
+            Route::post('/update', 'Admin\GroupConbinationController@update')->name('admin.combination.updateCombination');
+            Route::get('/{id}/delete', 'Admin\GroupConbinationController@delete')->name('admin.combination.deleteCombination');
+            /**end */
+        });
     });
 });
