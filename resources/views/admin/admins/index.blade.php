@@ -21,7 +21,7 @@
       <div class="col-md-12 col-xs-12">
         @include('admin.partials.flash')
         
-        <a href="{{ route('admin.groups.create') }}" class="btn btn-primary">Add Group</a>
+        <a href="{{ route('admin.admins.create') }}" class="btn btn-primary">Add Admin</a>
         <br /> <br />
         
         <div class="box">

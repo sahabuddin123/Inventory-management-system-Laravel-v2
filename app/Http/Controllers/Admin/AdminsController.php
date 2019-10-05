@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\BaseController;
+//use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Contracts\AdminsContract;
+use App\Http\Controllers\BaseController;
 
 class AdminsController extends BaseController
 {
+
     protected $adminsRepository;
  
     public function __construct(AdminsContract $adminsRepository)
@@ -30,10 +32,11 @@ class AdminsController extends BaseController
      */
     public function create()
     {
-        $groups = $this->groupsRepository->listGroups('id', 'asc');
-    
-        $this->setPageTitle('groups', 'Create groups');
-        return view('admin.groups.create', compact('groups'));
+        // $group = $this->adminsRepository->findAdminsById($id);
+        $admin = $this->adminsRepository->listAdmins('id', 'asc');
+        // $groups = Groups::orderBy('name','asc')->get();
+        $this->setPageTitle('Admins', 'Create Admins');
+        return view('admin.admins.create', compact('admin'));//->with(['groups'  => $groups])
     }
     /**
      * store
@@ -41,19 +44,24 @@ class AdminsController extends BaseController
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'                 =>  'required|max:191',
-            'slug'                  => 'required|max:191',
-            'permissions'           =>  'required'
+            'username'              =>  'required|max:191',
+            'password'              =>  'required|min:6',
+            'email'                 =>  'required',
+            'firstname'             =>  'required',
+            'lastname'              =>  'required',
+            'gender'                =>  'required',
+            'image'                 =>  'max:1000'
+            
         ]);
+            
+        $params = $request->except('_token');//;
+    //return view('admin.admins.test', compact('params'));
+        $admin = $this->adminsRepository->createAdmins($params);
     
-        $params = $request->except('_token');
-    
-        $groups = $this->groupsRepository->createGroups($params);
-    
-        if (!$groups) {
-            return $this->responseRedirectBack('Error occurred while creating groups.', 'error', true, true);
+        if (!$admin) {
+            return $this->responseRedirectBack('Error occurred while creating admin.', 'error', true, true);
         }
-        return $this->responseRedirect('admin.groups.index', 'groups added successfully' ,'success',false, false);
+        return $this->responseRedirect('admin.admins.index', 'admin added successfully' ,'success',false, false);
     }
     /**
      * edit
@@ -61,9 +69,9 @@ class AdminsController extends BaseController
 
     public function edit($id)
     {
-        $targetgroup = $this->groupsRepository->findGroupsById($id);
+        $targetgroup = $this->adminsRepository->findAdminsById($id);
         //$permissions = unserialize($this->targetgroup['permissions']);
-        $groups = $this->groupsRepository->listGroups();
+        $groups = $this->adminsRepository->listGroups();
     
         $this->setPageTitle('Groups', 'Edit Groups : '.$targetgroup->name);
         return view('admin.groups.edit', compact('groups', 'targetgroup'));
@@ -81,7 +89,7 @@ class AdminsController extends BaseController
     
         $params = $request->except('_token');
     
-        $groups = $this->groupsRepository->updateGroups($params);
+        $groups = $this->adminsRepository->updateAdmins($params);
     
         if (!$groups) {
             return $this->responseRedirectBack('Error occurred while updating groups.', 'error', true, true);
@@ -92,7 +100,7 @@ class AdminsController extends BaseController
 
     public function delete($id)
 {
-    $groups = $this->groupsRepository->deleteGroups($id);
+    $groups = $this->adminsRepository->deleteAdmins($id);
  
     if (!$groups) {
         return $this->responseRedirectBack('Error occurred while deleting groups.', 'error', true, true);

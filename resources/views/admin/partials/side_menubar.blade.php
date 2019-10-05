@@ -20,7 +20,13 @@
             </a>
             <ul class="treeview-menu">
               
-              <li id="createUserNav"><a href="{{route('admin.admins.create')}}"><i class="fa fa-circle-o"></i> Add Admin</a></li>
+              <li id="createUserNav">
+              <a class="app-menu__item {{ Route::currentRouteName() == 'admin.admins.create' ? 'active' : '' }}"
+                href="{{route('admin.admins.create')}}">
+                <i class="app-menu__icon fa fa-circle-o"></i>
+                <span class="app-menu__label"> Add Admin</span>
+            </a>
+              </li>
              
 
              <li id="manageUserNav"><a href="{{route('admin.admins.index')}}"><i class="fa fa-circle-o"></i> Manage Admin</a></li>
@@ -28,7 +34,7 @@
             </ul>
           </li>
 
-         <li class="treeview" id="mainGroupNav">
+         <!-- <li class="treeview" id="mainGroupNav">
               <a href="#">
                 <i class="fa fa-files-o"></i>
                 <span>Groups</span>
@@ -41,7 +47,7 @@
         
               <li id="manageGroupNav"><a href="{{route('admin.groups.index')}}"><i class="fa fa-circle-o"></i> Manage Groups</a></li>
               </ul>
-            </li>
+        </li> -->
           <li id="brandNav">
               <a href="">
                 <i class="glyphicon glyphicon-tags"></i> <span>Brands</span>

@@ -1,5 +1,6 @@
-
-
+@extends('admin.app')
+@section('title') Groups @endsection
+@section('content')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -26,53 +27,45 @@
             <div class="box-header">
               <h3 class="box-title">{{$pageTitle}}</h3>
             </div>
-            <form role="form" action="" method="post">
+            <form role="form" action="{{ route('admin.admins.store') }}" method="post">
             @csrf
               <div class="box-body">
 
                 
-
-                <div class="form-group">
-                  <label for="groups">Groups</label>
-                  <select class="form-control" id="groups" name="groups">
-                    <option value="">Select Groups</option>
-                     @foreach ($admin->admins as $k => $v)
-                      <option value="{{$v->id}}">{{$v->name}}</option>
-                    @endforeach
-                  </select>
-                </div>
-
-                <div class="form-group">
+               <div class="form-group">
                   <label for="username">Username</label>
-                  <input type="text" class="form-control" id="username" name="username" placeholder="Username" autocomplete="off">
-                </div>
-
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control" id="email" name="email" placeholder="Email" autocomplete="off">
+                  <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="Username" >
+                  @error('username') {{ $message }} @enderror
                 </div>
 
                 <div class="form-group">
                   <label for="password">Password</label>
-                  <input type="text" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off">
+                  <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password" >
+                  @error('password') {{ $message }} @enderror
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="cpassword">Confirm password</label>
                   <input type="password" class="form-control" id="cpassword" name="cpassword" placeholder="Confirm Password" autocomplete="off">
+                </div> -->
+
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Email" >
+                  @error('email') {{ $message }} @enderror
                 </div>
 
                 <div class="form-group">
                   <label for="fname">First name</label>
-                  <input type="text" class="form-control" id="fname" name="fname" placeholder="First name" autocomplete="off">
+                  <input type="text" class="form-control @error('firstname') is-invalid @enderror" id="firstname" name="firstname" placeholder="First name" >
+                  @error('firstname') {{ $message }} @enderror
                 </div>
 
                 <div class="form-group">
                   <label for="lname">Last name</label>
-                  <input type="text" class="form-control" id="lname" name="lname" placeholder="Last name" autocomplete="off">
+                  <input type="text" class="form-control @error('lastname') is-invalid @enderror" id="lastname" name="lastname" placeholder="Last name" >
+                  @error('lastname') {{ $message }} @enderror
                 </div>
-
-                
 
                 <div class="form-group">
                   <label for="gender">Gender</label>
@@ -82,14 +75,15 @@
                       Male
                     </label>
                     <label>
-                      <input type="radio" name="gender" id="female" value="2">
+                      <input type="radio" name="gender" id="female" value="0">
                       Female
                     </label>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="picture">Phone</label>
-                  <input type="file" class="form-control" id="file" name="picture" placeholder="picture" autocomplete="off">
+                  <label class="control-label">Admin Image</label>
+                  <input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image"/>
+                    @error('image') {{ $message }} @enderror
                 </div>
               </div>
               <!-- /.box-body -->
@@ -111,13 +105,13 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
+@endsection
+@push('scripts')
 <script type="text/javascript">
-  $(document).ready(function() {
-    $("#groups").select2();
-
-    $("#mainUserNav").addClass('active');
-    $("#createUserNav").addClass('active');
-  
-  });
+$(document).ready(function() {
+$('#groupTable').DataTable();
+$("#mainGroupNav").addClass('active');
+$("#manageGroupNav").addClass('active');
+});
 </script>
+@endpush

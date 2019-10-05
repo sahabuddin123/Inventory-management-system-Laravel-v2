@@ -2,17 +2,19 @@
 namespace App\Repositories;
  
 use App\Models\Admin;
-use App\Models\AdminGroup;
+use App\Traits\UploadAble;
+use Illuminate\Http\UploadedFile;
 use App\Contracts\AdminsContract;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Doctrine\Instantiator\Exception\InvalidArgumentException;
- 
+
 class AdminsRepository extends BaseRepository implements AdminsContract
 {
+    use UploadAble;
     /**
      * AdminsRepository constructor.
-     * @param Admins $model
+     * @param Admin $model
      */
     public function __construct(Admin $model)
     {
@@ -50,33 +52,34 @@ class AdminsRepository extends BaseRepository implements AdminsContract
  
     /**
      * @param array $params
-     * @return Category|mixed
+     * @return admin|mixed
      */
     public function createAdmins(array $params)
     {
         try {
             $collection = collect($params);
-            $picture = null;
- 
-            if ($collection->has('picture') && ($params['picture'] instanceof  UploadedFile)) {
-                $picture = $this->uploadOne($params['picture'], 'admins');
+         
+            $image = null;
+     
+            if ($collection->has('image') && ($params['image'] instanceof  UploadedFile)) {
+                $image = $this->uploadOne($params['image'], 'admins');
+            }else{
+                $image = "no_image.png";
             }
      
-            
             $username = $params['username'];
-            $password = bycript($params['password']);
+            $password = bcrypt($params['password']);
             $email = $params['email'];
             $firstname = $params['firstname'];
             $lastname = $params['lastname'];
             $gender = $collection->has('gender') ? 1 : 0;
 
-            $merge = $collection->merge(compact('username','password', 'email', 'firstname', 'lastname','gender','picture'));
             
-            $groups = new Groups($merge->all());
+            $merge = $collection->merge(compact('username','password', 'email', 'firstname', 'lastname','gender','image'));
+            $admin = new Admin($merge->all());
+            $admin->save();
  
-            $groups->save();
- 
-            return $groups;
+            return $admin;
  
         } catch (QueryException $exception) {
             throw new InvalidArgumentException($exception->getMessage());
@@ -89,17 +92,17 @@ class AdminsRepository extends BaseRepository implements AdminsContract
      */
     public function updateAdmins(array $params)
     {
-        $groups = $this->findAdminsById($params['id']);
+        $admin = $this->findAdminsById($params['id']);
  
         $collection = collect($params)->except('_token');
 
-        if ($collection->has('picture') && ($params['picture'] instanceof  UploadedFile)) {
+        if ($collection->has('image') && ($params['image'] instanceof  UploadedFile)) {
  
-            if ($category->picture != null) {
-                $this->deleteOne($category->picture);
+            if ($admin->image != null) {
+                $this->deleteOne($admin->image);
             }
      
-            $picture = $this->uploadOne($params['picture'], 'admins');
+            $image = $this->uploadOne($params['image'], 'admins');
         }
  
             $username = $params['username'];
@@ -109,11 +112,11 @@ class AdminsRepository extends BaseRepository implements AdminsContract
             $lastname = $params['lastname'];
             $gender = $collection->has('gender') ? 1 : 0;
 
-            $merge = $collection->merge(compact('username','password', 'email', 'firstname', 'lastname','gender','picture'));
+            $merge = $collection->merge(compact('username','password', 'email', 'firstname', 'lastname','gender','image'));
  
-        $groups->update($merge->all());
+        $admin->update($merge->all());
  
-        return $groups;
+        return $admin;
     }
  
     /**
@@ -122,10 +125,12 @@ class AdminsRepository extends BaseRepository implements AdminsContract
      */
     public function deleteAdmins($id)
     {
-        $groups = $this->findAdminsById($id);
+        $admin = $this->findAdminsById($id);
+        if ($admin->image != null) {
+            $this->deleteOne($admin->image);
+        }
+        $admin->delete();
  
-        $groups->delete();
- 
-        return $groups;
+        return $admin;
     }
 }
