@@ -18,6 +18,7 @@ Route::group(['prefix'  =>  'admin'], function () {
             Route::get('/', 'Admin\AdminsController@index')->name('admin.admins.index');
             Route::get('/create', 'Admin\AdminsController@create')->name('admin.admins.create');
             Route::post('/store', 'Admin\AdminsController@store')->name('admin.admins.store');
+            Route::get('/{id}/profile', 'Admin\AdminsController@profile')->name('admin.admins.profile');
             Route::get('/{id}/edit', 'Admin\AdminsController@edit')->name('admin.admins.edit');
             Route::post('/update', 'Admin\AdminsController@update')->name('admin.admins.update');
             Route::get('/{id}/delete', 'Admin\AdminsController@delete')->name('admin.admins.delete');

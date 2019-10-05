@@ -1,5 +1,6 @@
-
-
+@extends('admin.app')
+@section('title') Groups @endsection
+@section('content')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -52,9 +53,12 @@
   <!-- /.content-wrapper -->
 
 
+  @endsection
+@push('scripts')
 <script type="text/javascript">
-  $(document).ready(function() {
-    $("#mainUserNav").addClass('active');
-    $("#manageUserNav").addClass('active');
-  });
+$(document).ready(function() {
+$('#groupTable').DataTable();
+$("#mainGroupNav").addClass('active');
+$("#manageGroupNav").addClass('active');
+});
 </script>

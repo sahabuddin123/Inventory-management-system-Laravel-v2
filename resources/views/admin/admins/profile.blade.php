@@ -1,5 +1,6 @@
-
-
+@extends('admin.app')
+@section('title') Groups @endsection
+@section('content')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -17,45 +18,46 @@
     <!-- Main content -->
     <section class="content">
       <!-- Small boxes (Stat box) -->
+      @include('admin.partials.flash')
       <div class="row">
         <div class="col-md-12 col-xs-12">
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Profile XXX</h3>
+              <h3 class="box-title">{{ $pageTitle }} {{ $admin->username }}</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
               <table class="table table-bordered table-condensed table-hovered">
+              <tr>
+              <th colspan="2" style="text-align:center"><img class="card-img-top" src="{{ asset('storage/'.$admin->image) }}" alt="Card image cap" style="height:200px;width:200px;border:2px solid #000;border-radius:50%"></th>
+              </tr>
                 <tr>
                   <th>Username</th>
-                  <td><?php echo $user_data['username']; ?></td>
+                  <td>{{ $admin->username }}</td>
                 </tr>
                 <tr>
                   <th>Email</th>
-                  <td><?php echo $user_data['email']; ?></td>
+                  <td>{{ $admin->email }}</td>
                 </tr>
                 <tr>
                   <th>First Name</th>
-                  <td><?php echo $user_data['firstname']; ?></td>
+                  <td>{{ $admin->firstname }}</td>
                 </tr>
                 <tr>
                   <th>Last Name</th>
-                  <td><?php echo $user_data['lastname']; ?></td>
+                  <td>{{ $admin->lastname }}</td>
                 </tr>
                 <tr>
                   <th>Gender</th>
-                  <td><?php echo ($user_data['gender'] == 1) ? 'Male' : 'Gender'; ?></td>
-                </tr>
-                <tr>
-                  <th>Phone</th>
-                  <td><?php echo $user_data['phone']; ?></td>
+                  <td>{{ ($admin->gender == 1) ? 'Male' : 'Female' }}</td>
                 </tr>
                 <tr>
                   <th>Group</th>
-                  <td><span class="label label-info"><?php echo $user_group['group_name']; ?></span></td>
+                  <td><span style="color:#ff0000;font-size:18px;">{{-- $admin->listGroups->name --}}</span></td>
                 </tr>
               </table>
+              <a href="{{ route('admin.admins.index') }}" class="btn btn-primary" style="width:100%;">Go Back</a>
             </div>
             <!-- /.box-body -->
           </div>
@@ -70,5 +72,14 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
+@endsection
+@push('scripts')
+<script type="text/javascript">
+$(document).ready(function() {
+$('#groupTable').DataTable();
+$("#mainGroupNav").addClass('active');
+$("#manageGroupNav").addClass('active');
+});
+</script>
+@endpush
  

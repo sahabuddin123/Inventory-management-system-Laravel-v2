@@ -27,7 +27,7 @@
             <div class="box-header">
               <h3 class="box-title">{{$pageTitle}}</h3>
             </div>
-            <form role="form" action="{{ route('admin.admins.store') }}" method="post">
+            <form role="form" action="{{ route('admin.admins.store') }}" method="post" enctype="multipart/form-data">
             @csrf
               <div class="box-body">
 

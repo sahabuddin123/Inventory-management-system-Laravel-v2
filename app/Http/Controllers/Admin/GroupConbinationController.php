@@ -70,9 +70,8 @@ class GroupConbinationController extends BaseController
         if (!$adminGroup) {
                 return $this->responseRedirectBack('Error occurred while creating User Groups.', 'error', true, true);
             }
-        return $this->responseRedirect('admin.admins.index', 'User Groups added successfully' ,'success',false, false);
+        return $this->responseRedirect('admin.combination.indexCombination', 'User Groups added successfully' ,'success',false, false);
     }
-    
 
     public function editCombination($id)
     {

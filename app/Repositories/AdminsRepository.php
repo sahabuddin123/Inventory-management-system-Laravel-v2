@@ -73,7 +73,7 @@ class AdminsRepository extends BaseRepository implements AdminsContract
             $email = $params['email'];
             $firstname = $params['firstname'];
             $lastname = $params['lastname'];
-            $gender = $collection->has('gender') ? 1 : 0;
+            $gender = $params['gender'];
 
             
             $merge = $collection->merge(compact('username','email','password','firstname','lastname','gender','image'));
@@ -107,13 +107,12 @@ class AdminsRepository extends BaseRepository implements AdminsContract
         }
  
             $username = $params['username'];
-            $password = bycript($params['password']);
             $email = $params['email'];
             $firstname = $params['firstname'];
             $lastname = $params['lastname'];
-            $gender = $collection->has('gender') ? 1 : 0;
+            $gender = $params['gender'];
 
-            $merge = $collection->merge(compact('username','email','password','firstname','lastname','gender','image'));
+            $merge = $collection->merge(compact('username','email','firstname','lastname','gender','image'));
  
         $admin->update($merge->all());
  

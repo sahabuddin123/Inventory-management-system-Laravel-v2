@@ -62,6 +62,7 @@
 
                 <td>
                     <a href="{{ route('admin.admins.edit', $admins->id) }}" class="btn btn-default"><i class="fa fa-edit"></i></a>
+                    <a href="{{ route('admin.admins.profile', $admins->id) }}" class="btn btn-default"><i class="fa fa-television"></i></a>
                     <a href="{{ route('admin.admins.delete', $admins->id) }}" class="btn btn-default"><i class="fa fa-trash"></i></a>
                   </td>
 
